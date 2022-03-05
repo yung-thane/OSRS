@@ -1,8 +1,8 @@
 package com.revature.OSRS;
 
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -10,8 +10,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class App {
-    public static void main(String[] args){
+import static org.junit.jupiter.api.Assertions.*;
+
+class AppTest {
+    @Test
+    public void givenItemName_ThenReturnItem(){
         URI uri = null;
         //Uses class.ClassLoader, .getResource, and .to.URI to scan through folders and get OSRSItems.csv as a URI named uri.
         //It's useful because once program is packaged and shipped the folder structure changes making hard coding a filepath
@@ -32,17 +35,9 @@ public class App {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //Shorthand version of for each loops
-        //lines.forEach(System.out::println);
-        String searchQuery = "Dragon harpoon";
-        System.out.println(searchByName(searchQuery, lines));
-        }
-
-    public static String searchByName(String searchQuery, List<String> lines){
-        for (String item: lines){
-            if(item.contains(searchQuery))
-            return item;
-        }
-        return null;
+        String givenItem = "\"391\",\"391\",\"Manta ray\",\"True\",\"200\",\"1010\",\"3139\",\"999\",\"9363\",\"1002\",\"12502\"";
+        String result = App.searchByName(givenItem, lines);
+        assertEquals(givenItem, result);
     }
+
 }
