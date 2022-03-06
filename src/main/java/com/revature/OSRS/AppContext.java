@@ -2,6 +2,10 @@ package com.revature.OSRS;
 
 import org.apache.catalina.startup.Tomcat;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 public class AppContext {
 
     private static final String itemCSVFile = "OSRSItems.csv";
@@ -9,6 +13,7 @@ public class AppContext {
     private static ItemService itemService;
     private static Tomcat server;
     private static ItemController itemController;
+    private static Connection connection;
 
     public static void build(){
         itemRepository = new ItemRepository(itemCSVFile);
@@ -19,6 +24,12 @@ public class AppContext {
         server.getConnector();
         server.addContext("", null);
         server.addServlet("", "itemServlet", itemController).addMapping("/items");
+        try {
+            connection = DriverManager.getConnection("jdbc:h2:~/OSRS", "OSRS", "OSRS");
+            itemRepository.setConnection(connection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public static ItemRepository getItemRepository() {
