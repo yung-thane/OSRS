@@ -15,18 +15,23 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.rmi.ServerError;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class App {
     public static void main(String[] args){
+        //Loads Data
         List<Item> items = loadItems();
 
-        //Shorthand version of for each loops
-        //lines.forEach(System.out::println);
+        //Search query
         String searchQuery = "Dragon harpoon";
         System.out.println(searchByName(searchQuery, items));
+
+        //Save results
+
         }
         public static List<Item> loadItems(){
             URI uri = null;
@@ -35,12 +40,12 @@ public class App {
             // problematic. Take care to note that once you load ClassLoader, any changes made to the file will only be reflected
             // once the program/ClassLoader is restarted. Surround with try/catch to handle URISyntaxException.
             try {
-                uri = App.class.getClassLoader().getResource("OSRSItems.csv").toURI();
+                uri = Objects.requireNonNull(App.class.getClassLoader().getResource("OSRSItems.csv")).toURI();
             } catch (URISyntaxException e) {
                 e.printStackTrace();
             }
             //Uses a Paths.get to save uri as a Path named filepath.
-            Path filepath = Paths.get(uri);
+            Path filepath = Paths.get(Objects.requireNonNull(uri));
             List<Item> items = new ArrayList<>();
             //Using Files.newBufferedReader and the Path filepath acquired above, makes a Buffered Reader named br. Surrounded with
             //a try/catch for the IOException. Using while and .ready the br bufferedreader is looped through while there is data to be read.
@@ -61,9 +66,9 @@ public class App {
                     items.add(new Item(Integer.parseInt(columns[1]), columns[2], Integer.parseInt(columns[5]), Integer.parseInt(columns[7])));
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                System.err.println("Couldn't load file.");
             } catch (CsvException e){
-                e.printStackTrace();
+                System.err.println("OpenCSV failed to parse.");
             }
             return items;
         }
