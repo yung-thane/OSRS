@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class AppTest {
     @Test
     public void givenItemName_ThenReturnItem(){
-        List<String[]> lines = App.loadItems();
+        List<Item> lines = App.loadItems();
 
         String givenItem = "Dragon harpoon";
         String result = App.searchByName(givenItem, lines);
