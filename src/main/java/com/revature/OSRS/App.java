@@ -14,6 +14,5 @@ public class App {
         } catch (LifecycleException e) {
             System.err.println("Embedded server failed to start.");
         }
-        //Save results
         }
 }
