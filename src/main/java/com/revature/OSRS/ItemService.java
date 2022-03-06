@@ -15,4 +15,8 @@ public class ItemService {
         }
         return null;
     }
+
+    public void saveItem(Item item){
+        itemRepository.save(item);
+    }
 }

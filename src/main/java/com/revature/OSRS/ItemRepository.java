@@ -13,20 +13,40 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class ItemRepository {
     private List<Item> items;
+    private Connection connection;
 
     public ItemRepository(String csvFile){
         items = new ArrayList<>();
         parseItems(loadItemCSV(csvFile));
     }
 
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
+
     public List<Item> getItems() {
         return items;
+    }
+
+    public void save(Item item){
+        try{
+            try {
+                Statement statement = connection.createStatement();
+                statement.execute("INSERT INTO ARTISTS VALUES(" + item.getItemId() + ", '" + item.getItemName() + "'," + item.getBuyAverage() + "," + item.getSellAverage() + "," + item.getProfitAverage() + ")");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 
     private BufferedReader loadItemCSV(String csvFile) {
