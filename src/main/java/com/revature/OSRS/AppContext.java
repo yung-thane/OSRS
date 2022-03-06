@@ -27,7 +27,7 @@ public class AppContext {
         try {
             //Makes database in memory. Creates a table. Must be rerun every time program is reopened.
             //connection = DriverManager.getConnection("jdbc:h2:mem:", "OSRS", "OSRS");
-            connection = DriverManager.getConnection("jdbc:h2:OSRS", "OSRS", "OSRS");
+            connection = DriverManager.getConnection("jdbc:h2:~/OSRS", "OSRS", "OSRS");
             connection.createStatement().execute("CREATE TABLE ITEMS(itemId int primary key, itemName varchar, buyAverage int, sellAverage int, profitAverage int)");
             itemRepository.setConnection(connection);
         } catch (SQLException e) {
