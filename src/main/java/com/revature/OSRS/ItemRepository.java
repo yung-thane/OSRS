@@ -38,16 +38,15 @@ public class ItemRepository {
     }
 
     public void save(Item item){
-        try{
             try {
                 Statement statement = connection.createStatement();
-                statement.execute("INSERT INTO ARTISTS VALUES(" + item.getItemId() + ", '" + item.getItemName() + "'," + item.getBuyAverage() + "," + item.getSellAverage() + "," + item.getProfitAverage() + ")");
+                statement.execute("INSERT INTO ITEMS VALUES(" + item.getItemId() + ", '" + item.getItemName() + "'," + item.getBuyAverage() + "," + item.getSellAverage() + "," + item.getProfitAverage() + ")");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
 
         }
-    }
+
 
     private BufferedReader loadItemCSV(String csvFile) {
         if (!csvFile.endsWith(".csv"))
