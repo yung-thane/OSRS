@@ -25,6 +25,7 @@ public class AppContext {
         server.addContext("", null);
         server.addServlet("", "defaultServlet", new DefaultController()).addMapping("/*");
         server.addServlet("", "itemServlet", itemController).addMapping("/items");
+        server.addServlet("", "searchServlet", new SearchForm()).addMapping("/search");
         try {
             //Makes database in memory. Creates a table. Must be rerun every time program is reopened.
             //connection = DriverManager.getConnection("jdbc:h2:mem:", "OSRS", "OSRS");
