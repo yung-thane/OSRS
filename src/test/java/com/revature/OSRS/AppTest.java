@@ -19,7 +19,7 @@ class AppTest {
 
     @BeforeAll
     public static void setup() throws IOException, CsvException {
-        lines = App.parseItems(App.loadItemCSV("OSRSItems.csv"));
+        lines = AppContext.getItemRepository().parseItems(AppContext.getItemRepository().loadItemCSV("OSRSItems.csv"));
     }
     @Test
     public void givenItemName_ThenReturnItem(){
